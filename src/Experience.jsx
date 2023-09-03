@@ -1,7 +1,6 @@
-import { Grid, KeyboardControls } from "@react-three/drei";
+import { Grid } from "@react-three/drei";
 import { Perf } from "r3f-perf";
 import { Physics } from "@react-three/rapier";
-import CharacterController from "./CharacterController.jsx";
 import Floor from "../example/Floor.jsx";
 import Lights from "../example/Lights.jsx";
 import Steps from "../example/Steps.jsx";
@@ -12,7 +11,7 @@ import FloatingPlatform from "../example/FloatingPlatform.jsx";
 import DynamicPlatforms from "../example/DynamicPlatforms.jsx";
 import ShotCube from "../example/ShotCube";
 import { useControls } from "leva";
-import CharacterModel from "./CharacterModel.jsx";
+import { CharacterComponent } from "./components/CharacterComponent.jsx";
 
 export default function Experience() {
   /**
@@ -21,19 +20,6 @@ export default function Experience() {
   const { physics } = useControls("World Settings", {
     physics: false,
   });
-
-  /**
-   * Keyboard control preset
-   */
-  const keyboardMap = [
-    { name: "forward", keys: ["ArrowUp", "KeyW"] },
-    { name: "backward", keys: ["ArrowDown", "KeyS"] },
-    { name: "leftward", keys: ["ArrowLeft", "KeyA"] },
-    { name: "rightward", keys: ["ArrowRight", "KeyD"] },
-    { name: "jump", keys: ["Space"] },
-    { name: "run", keys: ["Shift"] },
-    { name: "triggle", keys: ["KeyF"] },
-  ];
 
   return (
     <>
@@ -49,14 +35,8 @@ export default function Experience() {
       <Lights />
 
       <Physics debug={physics} timeStep="vary">
-        {/* Keyboard preset */}
-        <KeyboardControls map={keyboardMap}>
-          {/* Character Control */}
-          <CharacterController>
-            {/* Replace your model here */}
-            <CharacterModel />
-          </CharacterController>
-        </KeyboardControls>
+        {/* Character */}
+        <CharacterComponent />
 
         {/* Rough plan */}
         <RoughPlane />
