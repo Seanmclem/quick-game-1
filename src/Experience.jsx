@@ -11,7 +11,7 @@ import FloatingPlatform from "../example/FloatingPlatform.jsx";
 import DynamicPlatforms from "../example/DynamicPlatforms.jsx";
 import ShotCube from "../example/ShotCube";
 import { useControls } from "leva";
-import { CharacterComponent } from "./components/CharacterComponent.jsx";
+import { CharacterComponent } from "./components/CharacterComponent";
 
 export default function Experience() {
   /**
