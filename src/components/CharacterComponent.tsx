@@ -1,6 +1,5 @@
 import { KeyboardControls } from "@react-three/drei";
 import CharacterController from "../CharacterController";
-// import CharacterModel from "./CharacterModel.jsx";
 import CharacterModel from "../CharacterModel.jsx";
 
 export const CharacterComponent = () => {

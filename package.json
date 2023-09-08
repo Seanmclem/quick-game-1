@@ -8,6 +8,7 @@
     "build": "tsc && vite build"
   },
   "devDependencies": {
+    "@types/three": "^0.155.1",
     "@vitejs/plugin-react": "3.0",
     "vite": "^4.3.9"
   },
@@ -21,6 +22,8 @@
     "r3f-perf": "^6.7.0",
     "react": "18.2",
     "react-dom": "18.2",
+    "react-joystick-component": "^6.2.1",
+    "styled-components": "^6.0.7",
     "three": "^0.153.0",
     "typescript": "^5.2.2",
     "zustand": "^4.4.1"

@@ -6,6 +6,7 @@ import * as THREE from "three";
 import { useControls } from "leva";
 import useFollowCam from "./hooks/useFollowCam";
 import useGame from "./stores/useGame";
+import { useInputs } from "./stores/input-store-hooks";
 
 export default function CharacterController(props) {
   const characterRef = useRef();
@@ -237,7 +238,7 @@ export default function CharacterController(props) {
   /**
    * keyboard controls setup
    */
-  const [subscribeKeys, getKeys] = useKeyboardControls();
+  const [_subscribeKeys, getKeys] = useKeyboardControls();
   const { rapier, world } = useRapier();
 
   // can jump setup
@@ -473,6 +474,9 @@ export default function CharacterController(props) {
     };
   });
 
+  const { forward, backward, leftward, rightward, jump, run } = useInputs();
+  const triggle = false;
+
   useEffect(() => {
     // Lock character rotations at Y axis
     characterRef.current.setEnabledRotations(
@@ -499,8 +503,8 @@ export default function CharacterController(props) {
     /**
      * Getting all the useful keys from useKeyboardControls
      */
-    const { forward, backward, leftward, rightward, jump, run, triggle } =
-      getKeys();
+    // const { forward, backward, leftward, rightward, jump, run, triggle } =
+    //   getKeys();
 
     // Getting moving directions
     if (forward) {
@@ -756,7 +760,7 @@ export default function CharacterController(props) {
       jumpIdleAnimation();
     }
     // On high sky, play falling animation
-    if (rayHit == null &&  currentVel.y < 0) {
+    if (rayHit == null && currentVel.y < 0) {
       duckAnimation();
     }
 

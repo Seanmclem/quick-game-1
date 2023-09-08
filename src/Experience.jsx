@@ -1,25 +1,14 @@
 import { Grid } from "@react-three/drei";
 import { Perf } from "r3f-perf";
-import { Physics } from "@react-three/rapier";
-import Floor from "../example/Floor.jsx";
-import Lights from "../example/Lights.jsx";
-import Steps from "../example/Steps.jsx";
-import Slopes from "../example/Slopes.jsx";
-import RoughPlane from "../example/RoughPlane.jsx";
-import RigidObjects from "../example/RigidObjects.jsx";
-import FloatingPlatform from "../example/FloatingPlatform.jsx";
-import DynamicPlatforms from "../example/DynamicPlatforms.jsx";
-import ShotCube from "../example/ShotCube";
-import { useControls } from "leva";
-import { CharacterComponent } from "./components/CharacterComponent";
+
+import { LevelOne } from "./scenes/levels/LevelOne";
+import { useLevelStore } from "./stores/useLevelStore";
+import { LevelTwo } from "./scenes/levels/LevelTwo";
+import { Joystick } from "react-joystick-component";
 
 export default function Experience() {
-  /**
-   * Debug settings
-   */
-  const { physics } = useControls("World Settings", {
-    physics: false,
-  });
+  const currnent_level = useLevelStore((state) => state.current_level);
+  // const set_current_level = useLevelStore((state) => state.set_current_level);
 
   return (
     <>
@@ -32,36 +21,11 @@ export default function Experience() {
         position={[0, -0.99, 0]}
       />
 
-      <Lights />
-
-      <Physics debug={physics} timeStep="vary">
-        {/* Character */}
-        <CharacterComponent />
-
-        {/* Rough plan */}
-        <RoughPlane />
-
-        {/* Slopes and stairs */}
-        <Slopes />
-
-        {/* Small steps */}
-        <Steps />
-
-        {/* Rigid body objects */}
-        <RigidObjects />
-
-        {/* Floating platform */}
-        <FloatingPlatform />
-
-        {/* Dynamic platforms */}
-        <DynamicPlatforms />
-
-        {/* Floor */}
-        <Floor />
-
-        {/* Shoting cubes */}
-        <ShotCube />
-      </Physics>
+      {currnent_level === 1 ? (
+        <LevelOne />
+      ) : currnent_level === 2 ? (
+        <LevelTwo />
+      ) : null}
     </>
   );
 }
