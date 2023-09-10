@@ -7,7 +7,7 @@ export const OptionsButton = () => {
 
   return (
     <CircleButton
-      onClick={(e) => {
+      onMouseDown={(e) => {
         update_movement({ jump: true });
         console.log("jumping");
 
@@ -18,7 +18,7 @@ export const OptionsButton = () => {
         }, 400);
       }}
     >
-      <div style={{ userSelect: "none" }}>J</div>
+      {/* <div style={{ userSelect: "none" }}>J</div> */}
     </CircleButton>
   );
 };
