@@ -9,6 +9,8 @@ export const OptionsButton = () => {
     <CircleButton
       onClick={(e) => {
         update_movement({ jump: true });
+        console.log("jumping");
+
         setTimeout(() => {
           update_movement({ jump: false });
         }, 100);
@@ -29,4 +31,5 @@ export const CircleButton = styled(GenericButton)`
   color: white;
   right: 75px;
   bottom: 100px;
+  user-select: none;
 `;

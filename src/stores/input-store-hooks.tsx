@@ -39,7 +39,7 @@ export const useKeyPresses = (is_keyboard_enabled = true) => {
   const handleKeyPress = (event: KeyboardEvent, direction: "DOWN" | "UP") => {
     const is_pressed = direction === "DOWN";
 
-    console.log("key pressed", event.key);
+    // console.log("key pressed", event.key);
     if (event.key === "ArrowUp" || event.key.toLocaleLowerCase() === "w") {
       update_movement({ forward: is_pressed });
     }

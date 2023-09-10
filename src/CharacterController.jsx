@@ -465,7 +465,7 @@ export default function CharacterController(props) {
     const unSubscribeAnimation = useGame.subscribe(
       (state) => state.curAnimation,
       (value) => {
-        console.log(value);
+        // console.log(value);
       }
     );
 
