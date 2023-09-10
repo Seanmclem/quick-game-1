@@ -5,7 +5,7 @@ export const MovementJoystick = () => {
   const update_movement = useInputsStore((state) => state.update_movement);
 
   return (
-    <div style={{ position: "absolute", top: 200, zIndex: 10 }}>
+    <div style={{ position: "absolute", bottom: 200, left: 75, zIndex: 10 }}>
       <Joystick
         size={100}
         // sticky={true}
@@ -21,11 +21,11 @@ export const MovementJoystick = () => {
             distance: 22.78972670012535,
           };
 
-          const is_forward = ({ y }: any) => y > 0.2;
-          const is_backward = ({ y }: any) => y < -0.2;
+          const is_forward = ({ y }: any) => y > 0.1;
+          const is_backward = ({ y }: any) => y < -0.1;
 
-          const is_left = ({ x }: any) => x < -0.2;
-          const is_right = ({ x }: any) => x > 0.2;
+          const is_left = ({ x }: any) => x < -0.1;
+          const is_right = ({ x }: any) => x > 0.1;
 
           const is_run = ({ distance }: any) => distance > 75;
 

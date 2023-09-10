@@ -1,26 +1,32 @@
 import { styled } from "styled-components";
 import { GenericButton } from "./GenericButton";
+import { useInputsStore } from "../../stores/input-store-hooks";
 
 export const OptionsButton = () => {
+  const update_movement = useInputsStore((state) => state.update_movement);
+
   return (
     <CircleButton
       onClick={(e) => {
-        console.log("Options button clicked");
+        update_movement({ jump: true });
+        setTimeout(() => {
+          update_movement({ jump: false });
+        }, 100);
       }}
     >
-      ⏸
+      <div>J</div>
     </CircleButton>
   );
 };
 
 export const CircleButton = styled(GenericButton)`
-  width: 50px;
-  height: 50px;
+  width: 100px;
+  height: 100px;
   border-radius: 50%;
-  background-color: lightblue;
+  background-color: darkblue;
 
   position: absolute;
-
-  top: 10px;
-  right: 47%;
+  color: white;
+  right: 75px;
+  bottom: 100px;
 `;
