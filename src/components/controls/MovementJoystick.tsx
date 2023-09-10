@@ -21,13 +21,13 @@ export const MovementJoystick = () => {
             distance: 22.78972670012535,
           };
 
-          const is_forward = ({ y }) => y > 0.2;
-          const is_backward = ({ y }) => y < -0.2;
+          const is_forward = ({ y }: any) => y > 0.2;
+          const is_backward = ({ y }: any) => y < -0.2;
 
-          const is_left = ({ x }) => x < -0.2;
-          const is_right = ({ x }) => x > 0.2;
+          const is_left = ({ x }: any) => x < -0.2;
+          const is_right = ({ x }: any) => x > 0.2;
 
-          const is_run = ({ distance }) => distance > 75;
+          const is_run = ({ distance }: any) => distance > 75;
 
           const forward = is_forward(e);
           const backward = is_backward(e);
