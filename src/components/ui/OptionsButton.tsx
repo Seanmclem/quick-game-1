@@ -11,12 +11,14 @@ export const OptionsButton = () => {
         update_movement({ jump: true });
         console.log("jumping");
 
+        e.stopPropagation();
+
         setTimeout(() => {
           update_movement({ jump: false });
-        }, 100);
+        }, 400);
       }}
     >
-      <div>J</div>
+      <div style={{ userSelect: "none" }}>J</div>
     </CircleButton>
   );
 };
