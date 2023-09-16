@@ -7,15 +7,17 @@ export const OptionsButton = () => {
 
   return (
     <CircleButton
-      onMouseDown={(e) => {
+      onTouchStart={(e) => {
         update_movement({ jump: true });
         console.log("jumping");
 
         e.stopPropagation();
+      }}
+      onTouchEnd={(e) => {
+        update_movement({ jump: false });
+        console.log("not jumping");
 
-        setTimeout(() => {
-          update_movement({ jump: false });
-        }, 400);
+        e.stopPropagation();
       }}
     >
       {/* <div style={{ userSelect: "none" }}>J</div> */}
