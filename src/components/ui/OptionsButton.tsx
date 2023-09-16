@@ -12,13 +12,17 @@ export const OptionsButton = () => {
         console.log("jumping");
 
         e.stopPropagation();
-      }}
-      onTouchEnd={(e) => {
-        update_movement({ jump: false });
-        console.log("not jumping");
 
-        e.stopPropagation();
+        setTimeout(() => {
+          update_movement({ jump: false });
+        }, 400);
       }}
+      // onTouchEnd={(e) => {
+      //   update_movement({ jump: false });
+      //   console.log("not jumping");
+
+      //   e.stopPropagation();
+      // }}
     >
       {/* <div style={{ userSelect: "none" }}>J</div> */}
     </CircleButton>

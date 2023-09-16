@@ -17,6 +17,7 @@ root.render(
     <OptionsButton />
 
     <Canvas
+      style={{ userSelect: "none" }}
       shadows
       camera={{
         fov: 65,
