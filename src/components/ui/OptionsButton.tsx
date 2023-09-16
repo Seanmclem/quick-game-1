@@ -7,22 +7,24 @@ export const OptionsButton = () => {
 
   return (
     <CircleButton
-      onTouchStart={(e) => {
+      onPointerDown={(e) => {
         update_movement({ jump: true });
         console.log("jumping");
 
         e.stopPropagation();
+        e.preventDefault();
 
-        setTimeout(() => {
-          update_movement({ jump: false });
-        }, 400);
+        // setTimeout(() => {
+        //   update_movement({ jump: false });
+        // }, 400);
       }}
-      // onTouchEnd={(e) => {
-      //   update_movement({ jump: false });
-      //   console.log("not jumping");
+      onPointerUp={(e) => {
+        update_movement({ jump: false });
+        console.log("not jumping");
 
-      //   e.stopPropagation();
-      // }}
+        e.stopPropagation();
+        e.preventDefault();
+      }}
     >
       {/* <div style={{ userSelect: "none" }}>J</div> */}
     </CircleButton>
