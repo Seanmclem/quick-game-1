@@ -498,38 +498,27 @@ export default function CharacterController(props) {
       dirLight.target.position.copy(currentPos);
     }
 
-    /**
-     * Getting all the useful keys from useKeyboardControls
-     */
-    // const { forward, backward, leftward, rightward, jump, run, triggle } =
-    //   getKeys();
+    const DEG_TO_RAD = (deg) => (deg * Math.PI) / 180;
 
-    // Getting moving directions
     if (forward) {
-      // Apply camera rotation to character model
-      modelEuler.y = pivot.rotation.y;
+      modelEuler.y = pivot.rotation.y + DEG_TO_RAD(0);
     } else if (backward) {
-      // Apply camera rotation to character model
-      modelEuler.y = pivot.rotation.y + Math.PI;
+      modelEuler.y = pivot.rotation.y + DEG_TO_RAD(180);
     } else if (leftward) {
-      // Apply camera rotation to character model
-      modelEuler.y = pivot.rotation.y + Math.PI / 2;
+      modelEuler.y = pivot.rotation.y + DEG_TO_RAD(90);
     } else if (rightward) {
-      // Apply camera rotation to character model
-      modelEuler.y = pivot.rotation.y - Math.PI / 2;
+      modelEuler.y = pivot.rotation.y + DEG_TO_RAD(-90);
     }
+
+    // For combined directions:
     if (forward && leftward) {
-      // Apply camera rotation to character model
-      modelEuler.y = pivot.rotation.y + Math.PI / 4;
+      modelEuler.y = pivot.rotation.y + DEG_TO_RAD(45);
     } else if (forward && rightward) {
-      // Apply camera rotation to character model
-      modelEuler.y = pivot.rotation.y - Math.PI / 4;
+      modelEuler.y = pivot.rotation.y + DEG_TO_RAD(-45);
     } else if (backward && leftward) {
-      // Apply camera rotation to character model
-      modelEuler.y = pivot.rotation.y - Math.PI / 4 + Math.PI;
+      modelEuler.y = pivot.rotation.y + DEG_TO_RAD(135);
     } else if (backward && rightward) {
-      // Apply camera rotation to character model
-      modelEuler.y = pivot.rotation.y + Math.PI / 4 + Math.PI;
+      modelEuler.y = pivot.rotation.y + DEG_TO_RAD(-135);
     }
 
     // Move character to the moving direction
