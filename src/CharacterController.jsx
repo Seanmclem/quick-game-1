@@ -1,4 +1,3 @@
-import { useKeyboardControls } from "@react-three/drei";
 import { useFrame } from "@react-three/fiber";
 import { RigidBody, CapsuleCollider, useRapier } from "@react-three/rapier";
 import { useEffect, useRef, useMemo } from "react";
@@ -238,7 +237,6 @@ export default function CharacterController(props) {
   /**
    * keyboard controls setup
    */
-  const [_subscribeKeys, getKeys] = useKeyboardControls();
   const { rapier, world } = useRapier();
 
   // can jump setup

@@ -1,4 +1,3 @@
-import { KeyboardControls } from "@react-three/drei";
 import CharacterController from "../CharacterController";
 import CharacterModel from "../CharacterModel.jsx";
 
@@ -22,12 +21,9 @@ export const CharacterComponent = () => {
   ];
 
   return (
-    <KeyboardControls map={keyboardMap}>
-      {/* Character Control */}
-      <CharacterController>
-        {/* Replace your model here */}
-        <CharacterModel />
-      </CharacterController>
-    </KeyboardControls>
+    <CharacterController>
+      {/* Replace your model here */}
+      <CharacterModel />
+    </CharacterController>
   );
 };
