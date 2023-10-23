@@ -498,8 +498,11 @@ export default function CharacterController(props) {
       dirLight.target.position.copy(currentPos);
     }
 
+    // TODO: Pass movements as a single number, like 0 or 45.
+    // then do `modelEuler.y = pivot.rotation.y + DEG_TO_RAD(DIRECTION)`, one time.
+    // adapt for keyboard, easy for joysticks
     const DEG_TO_RAD = (deg) => (deg * Math.PI) / 180;
-
+    // for straight directions:
     if (forward) {
       modelEuler.y = pivot.rotation.y + DEG_TO_RAD(0);
     } else if (backward) {
@@ -509,7 +512,6 @@ export default function CharacterController(props) {
     } else if (rightward) {
       modelEuler.y = pivot.rotation.y + DEG_TO_RAD(-90);
     }
-
     // For combined directions:
     if (forward && leftward) {
       modelEuler.y = pivot.rotation.y + DEG_TO_RAD(45);
