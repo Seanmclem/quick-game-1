@@ -1,20 +1,16 @@
 import { Joystick } from "react-joystick-component";
-import { useInputs, useInputsStore } from "../../stores/input-store-hooks";
+import { useInputsStore } from "../../stores/input-store-hooks";
 import { IJoystickUpdateEvent } from "react-joystick-component/build/lib/Joystick";
 
 export const MovementJoystick = () => {
   const update_movement = useInputsStore((state) => state.update_movement);
+  const forward = useInputsStore((state) => state.forward);
+  const backward = useInputsStore((state) => state.backward);
+  const leftward = useInputsStore((state) => state.leftward);
+  const rightward = useInputsStore((state) => state.rightward);
+  const run = useInputsStore((state) => state.run);
 
   const on_move = (e: IJoystickUpdateEvent) => {
-    // console.log(e);
-    //   const foo = {
-    //     type: "move",
-    //     x: 0.145234375,
-    //     y: -0.175625,
-    //     direction: "BACKWARD",
-    //     distance: 22.78972670012535,
-    //   };
-
     const is_forward = ({ y }: IJoystickUpdateEvent) => (y ? y > 0.1 : false);
     const is_backward = ({ y }: IJoystickUpdateEvent) => (y ? y < -0.1 : false);
 
@@ -24,31 +20,31 @@ export const MovementJoystick = () => {
     const is_run = ({ distance }: IJoystickUpdateEvent) =>
       distance ? distance > 75 : false;
 
-    const forward = is_forward(e);
-    const backward = is_backward(e);
-    const leftward = is_left(e);
-    const rightward = is_right(e);
-    const run = is_run(e);
+    const moving_forward = is_forward(e);
+    const moving_backward = is_backward(e);
+    const moving_leftward = is_left(e);
+    const moving_rightward = is_right(e);
+    const moving_run = is_run(e);
 
-    const any_pressed = forward || backward || leftward || rightward || run;
+    // const any_pressed = forward || backward || leftward || rightward || run;
 
-    if (is_forward(e)) {
-      console.log("forward");
+    if (forward !== moving_forward) {
+      console.log({ forward, moving_forward });
+
+      update_movement({ forward: moving_forward });
     }
-
-    // prevents dude sinking and stuff when moving in dead-zone
-    if (any_pressed) {
-      update_movement({
-        forward: is_forward(e),
-        backward: is_backward(e),
-        leftward: is_left(e),
-        rightward: is_right(e),
-        run: is_run(e),
-      });
+    if (backward !== moving_backward) {
+      update_movement({ backward: moving_backward });
     }
-
-    // greater than -0.20 and less than 0.20
-    // const is_deadZone = (num) => num > -0.2 && num < 0.2;
+    if (leftward !== moving_leftward) {
+      update_movement({ leftward: moving_leftward });
+    }
+    if (rightward !== moving_rightward) {
+      update_movement({ rightward: moving_rightward });
+    }
+    if (run !== moving_run) {
+      update_movement({ run: moving_run });
+    }
   };
 
   return (

@@ -21,15 +21,28 @@ interface CharacterMovement {
 // !! TODO: ^ ask chat-gpt how to turn the Math.PI/2 stuff into x/y coordinate stuff
 
 // Store for inputs
-export const useInputsStore = create<CharacterMovement>()((set, state) => ({
+export const useInputsStore = create<CharacterMovement>()((set) => ({
   forward: false,
   backward: false,
   leftward: false,
   rightward: false,
   jump: false,
   run: false,
-  update_movement: (movement: Partial<CharacterMovement>) =>
-    set({ ...state, ...movement }),
+  update_movement: (movement: Partial<CharacterMovement>) => {
+    // console.log("poo", { ...sat });
+    // const changed_values = {};
+
+    // for (const key in state) {
+    //     if (state[key] !== movement[key]) {
+    //       changed_values[key] = movement[key];
+    //     }
+    // }
+    return set((state) => {
+      console.log(movement);
+
+      return { ...state, ...movement };
+    });
+  },
 }));
 
 // hook for registering keyboard input
@@ -90,6 +103,7 @@ export const useKeyPresses = (is_keyboard_enabled = true) => {
 
 // hook for handling all input setup/coordination, and returning the current input state, all in one
 export const useInputs = () => {
+  // useInputsStore initializes key listeners
   const { forward, backward, leftward, rightward, jump, run } = useInputsStore(
     (state) => state
   );
