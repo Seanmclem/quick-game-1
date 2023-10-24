@@ -1,6 +1,7 @@
 import { create } from "zustand";
 
 interface CharacterInputs {
+  movement_degrees: number;
   forward: boolean;
   backward: boolean;
   leftward: boolean;
@@ -12,6 +13,7 @@ interface CharacterInputs {
 
 // Store for inputs
 export const useInputsStore = create<CharacterInputs>()((set) => ({
+  movement_degrees: 0,
   forward: false,
   backward: false,
   leftward: false,
@@ -20,7 +22,7 @@ export const useInputsStore = create<CharacterInputs>()((set) => ({
   run: false,
   update_movement: (movement: Partial<CharacterInputs>) => {
     return set((state) => {
-      console.log(movement);
+      // console.log(movement);
       return { ...state, ...movement };
     });
   },

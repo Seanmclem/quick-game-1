@@ -42,6 +42,9 @@ export default function FloatingPlatform() {
   }, []);
 
   useFrame(() => {
+    if (!floatingPlateRef.current) {
+      return;
+    }
     /**
      * Ray casting detect if on ground
      */

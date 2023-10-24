@@ -5,7 +5,7 @@ import * as THREE from "three";
 import { useControls } from "leva";
 import useFollowCam from "./hooks/useFollowCam";
 import useGame from "./stores/useGame";
-import { useInputListeners } from "./hooks/useInputListeners";
+import { useInputsStore } from "./stores/input-store-hooks";
 
 export default function CharacterController(props) {
   const characterRef = useRef();
@@ -472,8 +472,15 @@ export default function CharacterController(props) {
     };
   });
 
-  const { forward, backward, leftward, rightward, jump, run } =
-    useInputListeners();
+  const {
+    forward,
+    backward,
+    leftward,
+    rightward,
+    jump,
+    run,
+    movement_degrees,
+  } = useInputsStore();
   const triggle = false;
 
   useEffect(() => {
@@ -486,8 +493,11 @@ export default function CharacterController(props) {
   }, []);
 
   useFrame((state, delta) => {
+    if (!characterRef?.current) {
+      return;
+    }
     // Character current position
-    currentPos.copy(characterRef.current.translation());
+    currentPos.copy(characterRef?.current?.translation());
 
     /**
      * Apply character position to directional light
@@ -499,30 +509,24 @@ export default function CharacterController(props) {
       dirLight.target.position.copy(currentPos);
     }
 
-    // TODO: Pass movements as a single number, like 0 or 45.
-    // then do `modelEuler.y = pivot.rotation.y + DEG_TO_RAD(DIRECTION)`, one time.
-    // adapt for keyboard, easy for joysticks
+    // working degree navigation
+    // TODO: diagonals, cumulative math based direction
     const DEG_TO_RAD = (deg) => (deg * Math.PI) / 180;
-    // for straight directions:
-    if (forward) {
-      modelEuler.y = pivot.rotation.y + DEG_TO_RAD(0);
-    } else if (backward) {
-      modelEuler.y = pivot.rotation.y + DEG_TO_RAD(180);
-    } else if (leftward) {
-      modelEuler.y = pivot.rotation.y + DEG_TO_RAD(90);
-    } else if (rightward) {
-      modelEuler.y = pivot.rotation.y + DEG_TO_RAD(-90);
+    if (movement_degrees !== undefined) {
+      console.log("movement_degrees", movement_degrees);
+      modelEuler.y = pivot.rotation.y + DEG_TO_RAD(movement_degrees);
     }
-    // For combined directions:
-    if (forward && leftward) {
-      modelEuler.y = pivot.rotation.y + DEG_TO_RAD(45);
-    } else if (forward && rightward) {
-      modelEuler.y = pivot.rotation.y + DEG_TO_RAD(-45);
-    } else if (backward && leftward) {
-      modelEuler.y = pivot.rotation.y + DEG_TO_RAD(135);
-    } else if (backward && rightward) {
-      modelEuler.y = pivot.rotation.y + DEG_TO_RAD(-135);
-    }
+
+    // // For combined directions:
+    // if (forward && leftward) {
+    //   modelEuler.y = pivot.rotation.y + DEG_TO_RAD(45);
+    // } else if (forward && rightward) {
+    //   modelEuler.y = pivot.rotation.y + DEG_TO_RAD(-45);
+    // } else if (backward && leftward) {
+    //   modelEuler.y = pivot.rotation.y + DEG_TO_RAD(135);
+    // } else if (backward && rightward) {
+    //   modelEuler.y = pivot.rotation.y + DEG_TO_RAD(-135);
+    // }
 
     // Move character to the moving direction
     if (forward || backward || leftward || rightward)

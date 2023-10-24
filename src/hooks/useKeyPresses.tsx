@@ -11,18 +11,24 @@ export const useKeyPresses = (is_keyboard_enabled = true) => {
 
     // console.log("key pressed", event.key);
     if (event.key === "ArrowUp" || event.key.toLocaleLowerCase() === "w") {
+      // update_movement({ movement_degrees: 0 });
+      update_movement({ movement_degrees: 0 });
+
       update_movement({ forward: is_pressed });
     }
 
     if (event.key === "ArrowLeft" || event.key.toLocaleLowerCase() === "a") {
-      update_movement({ leftward: is_pressed });
+      // update_movement({  });
+      update_movement({ leftward: is_pressed, movement_degrees: 90 });
     }
 
     if (event.key === "ArrowDown" || event.key.toLocaleLowerCase() === "s") {
+      update_movement({ movement_degrees: 180 });
       update_movement({ backward: is_pressed });
     }
 
     if (event.key === "ArrowRight" || event.key.toLocaleLowerCase() === "d") {
+      update_movement({ movement_degrees: -90 });
       update_movement({ rightward: is_pressed });
     }
 

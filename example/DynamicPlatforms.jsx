@@ -19,7 +19,9 @@ export default function DynamicPlatforms() {
 
   useFrame((state) => {
     time = state.clock.elapsedTime;
-
+    if (!sideMovePlatformRef.current) {
+      return;
+    }
     // Move platform
     sideMovePlatformRef.current.setNextKinematicTranslation({
       x: 5 * Math.sin(time / 2) - 12,
@@ -68,7 +70,11 @@ export default function DynamicPlatforms() {
       </RigidBody>
 
       {/* Elevating platform */}
-      <RigidBody type="kinematicPosition" position={[-25, 0, 0]} ref={verticalMovePlatformRef}>
+      <RigidBody
+        type="kinematicPosition"
+        position={[-25, 0, 0]}
+        ref={verticalMovePlatformRef}
+      >
         <Text
           scale={0.5}
           color="black"
