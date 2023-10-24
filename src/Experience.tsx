@@ -4,11 +4,15 @@ import { Perf } from "r3f-perf";
 import { LevelOne } from "./scenes/levels/LevelOne";
 import { useLevelStore } from "./stores/useLevelStore";
 import { LevelTwo } from "./scenes/levels/LevelTwo";
-import { Joystick } from "react-joystick-component";
+import { useKeyPresses } from "./hooks/useKeyPresses";
+import { MovementJoystick } from "./components/controls/MovementJoystick";
+import { OptionsButton } from "./components/ui/OptionsButton";
 
 export default function Experience() {
   const currnent_level = useLevelStore((state) => state.current_level);
   // const set_current_level = useLevelStore((state) => state.set_current_level);
+
+  useKeyPresses();
 
   return (
     <>

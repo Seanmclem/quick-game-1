@@ -5,7 +5,7 @@ import * as THREE from "three";
 import { useControls } from "leva";
 import useFollowCam from "./hooks/useFollowCam";
 import useGame from "./stores/useGame";
-import { useInputs } from "./stores/input-store-hooks";
+import { useInputListeners } from "./hooks/useInputListeners";
 
 export default function CharacterController(props) {
   const characterRef = useRef();
@@ -472,7 +472,8 @@ export default function CharacterController(props) {
     };
   });
 
-  const { forward, backward, leftward, rightward, jump, run } = useInputs();
+  const { forward, backward, leftward, rightward, jump, run } =
+    useInputListeners();
   const triggle = false;
 
   useEffect(() => {

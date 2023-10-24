@@ -1,7 +1,7 @@
 import "./style.css";
 import ReactDOM from "react-dom/client";
 import { Canvas } from "@react-three/fiber";
-import Experience from "./Experience.jsx";
+import Experience from "./Experience.tsx";
 import { Leva } from "leva";
 import { OptionsButton } from "./components/ui/OptionsButton";
 import { MovementJoystick } from "./components/controls/MovementJoystick";
