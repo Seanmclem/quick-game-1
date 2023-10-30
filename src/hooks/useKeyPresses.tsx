@@ -7,74 +7,52 @@ const getDegreesFromDirections = (
   leftward: boolean,
   rightward: boolean
 ) => {
+  // individual directions
   if (forward && !backward && !leftward && !rightward) {
-    // just forward
-    //console.log("setting degrees");
     return 0;
   }
   if (!forward && backward && !leftward && !rightward) {
-    // just backward
-    //console.log("setting degrees");
-
     return 180;
   }
   if (!forward && !backward && leftward && !rightward) {
-    // just left
-    //console.log("setting degrees");
-
     return 90;
   }
   if (!forward && !backward && !leftward && rightward) {
-    // just right
-    //console.log("setting degrees");
-
     return -90;
   }
 
+  // combinations of directions
   if (forward && !backward && leftward && !rightward) {
-    // forward and left
-    //console.log("setting degrees");
-
     return 45;
   }
   if (forward && !backward && !leftward && rightward) {
-    // forward and right
-    //console.log("setting degrees");
-
     return -45;
   }
   if (!forward && backward && leftward && !rightward) {
-    // backward and left
-    //console.log("setting degrees");
-
     return 135;
   }
   if (!forward && backward && !leftward && rightward) {
-    // backward and right\
-    //console.log("setting degrees");
-
     return -135;
   }
 
-  //console.log("setting undefined degrees");//not the culprit
   return undefined;
 };
 
+// Moved these outside of the hook to prevent reinitialization to false.
+// could use useRef instead, but this is simpler
+let forward = false;
+let backward = false;
+let leftward = false;
+let rightward = false;
+//
+
 // hook for registering keyboard input
 export const useKeyPresses = (is_keyboard_enabled = true) => {
-  const { update_movement, movement_degrees } = useInputsStore();
-
-  // NOTES:
-  // Movement-degrees are always 0 or direction after un_press, and never undefined apparently
-  // need default undefined and, set back to undefined if no movement pressed
+  const { update_movement } = useInputsStore();
 
   // TODO: Does handleKeyPress this need useCallaback?
+  // OR: Just move most code of the functions out of the hook, in separate functions
   const handleKeyPress = (event: KeyboardEvent, direction: "DOWN" | "UP") => {
-    let forward = false;
-    let backward = false;
-    let leftward = false;
-    let rightward = false;
-
     const is_pressed = direction === "DOWN";
 
     const jump_pressed = event.code === "Space";
