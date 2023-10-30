@@ -6,6 +6,7 @@ import { useControls } from "leva";
 import useFollowCam from "./hooks/useFollowCam";
 import useGame from "./stores/useGame";
 import { useInputsStore } from "./stores/input-store-hooks";
+// import { is } from "@react-three/fiber/dist/declarations/src/core/utils";
 
 export default function CharacterController(props) {
   const characterRef = useRef();
@@ -472,16 +473,10 @@ export default function CharacterController(props) {
     };
   });
 
-  const {
-    forward,
-    backward,
-    leftward,
-    rightward,
-    jump,
-    run,
-    movement_degrees,
-  } = useInputsStore();
+  const { jump, run, movement_degrees } = useInputsStore();
   const triggle = false;
+
+  const is_moving = movement_degrees !== undefined;
 
   useEffect(() => {
     // Lock character rotations at Y axis
@@ -510,10 +505,9 @@ export default function CharacterController(props) {
     }
 
     // working degree navigation
-    // TODO: diagonals, cumulative math based direction
     const DEG_TO_RAD = (deg) => (deg * Math.PI) / 180;
+
     if (movement_degrees !== undefined) {
-      console.log("movement_degrees", movement_degrees);
       modelEuler.y = pivot.rotation.y + DEG_TO_RAD(movement_degrees);
     }
 
@@ -529,8 +523,7 @@ export default function CharacterController(props) {
     // }
 
     // Move character to the moving direction
-    if (forward || backward || leftward || rightward)
-      moveCharacter(delta, run, slopeAngle, movingObjectVelocity);
+    if (is_moving) moveCharacter(delta, run, slopeAngle, movingObjectVelocity);
 
     // Character current velocity
     currentVel.copy(characterRef.current.linvel());
@@ -708,8 +701,7 @@ export default function CharacterController(props) {
     /**
      * Apply drag force if it's not moving
      */
-    if (!forward && !backward && !leftward && !rightward && canJump) {
-      // not on a moving object
+    if (!is_moving && canJump) {
       if (!isOnMovingObject) {
         dragForce.set(
           -currentVel.x * dragDampingC,
@@ -727,6 +719,8 @@ export default function CharacterController(props) {
         );
         characterRef.current.applyImpulse(dragForce, true);
       }
+    } else {
+      // console.log(`is_moving-!else: ${is_moving}`);
     }
 
     /**
@@ -740,15 +734,16 @@ export default function CharacterController(props) {
      * Camera collision detect
      */
     cameraCollisionDetect(characterRef.current, delta);
-
+    /// HEERRREEE
+    //
     /**
      * Apply all the animations
      */
-    if (!forward && !backward && !leftward && !rightward && !jump && canJump) {
+    if (!is_moving && !jump && canJump) {
       idleAnimation();
     } else if (jump && canJump) {
       jumpAnimation();
-    } else if (canJump && (forward || backward || leftward || rightward)) {
+    } else if (canJump && is_moving) {
       run ? runAnimation() : walkAnimation();
     } else if (!canJump) {
       jumpIdleAnimation();
