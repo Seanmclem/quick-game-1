@@ -506,6 +506,7 @@ export default function CharacterController(props) {
 
     // working degree navigation
     const DEG_TO_RAD = (deg) => (deg * Math.PI) / 180;
+    // console.log("DEG_TO_RAD(movement_degrees)", DEG_TO_RAD(movement_degrees));
 
     if (movement_degrees !== undefined) {
       modelEuler.y = pivot.rotation.y + DEG_TO_RAD(movement_degrees);

@@ -2,17 +2,16 @@ import { IJoystickUpdateEvent } from "react-joystick-component/build/lib/Joystic
 import { useInputsStore } from "../stores/input-store-hooks";
 
 const getDegreesFromDirections = (x: number, y: number) => {
-  // individual directions
-  // if (x === 0 && y === 0) {
-  //     return undefined;
-  // }
-
   let radians = Math.atan2(y, x);
-  let degrees = radians * (180 / Math.PI);
 
+  let degrees = (radians * (180 / Math.PI) - 90) % 360;
   if (degrees < 0) {
     degrees += 360;
   }
+
+  // remove decimals from degrees
+  degrees = Math.round(degrees);
+  console.log({ radians, degrees });
 
   return {
     degrees,
@@ -25,7 +24,13 @@ export const useTouchInputs = () => {
   const movement_degrees = useInputsStore((state) => state.movement_degrees);
 
   const handleTouchMove = (e: IJoystickUpdateEvent) => {
-    const { x, y } = e;
+    const { x, y, distance } = e;
+
+    if (distance && distance < 50) {
+      return;
+    }
+
+    console.log({ x, y });
 
     if (movement_degrees !== undefined && !x && !y) {
       update_movement({ movement_degrees: undefined });
@@ -34,7 +39,13 @@ export const useTouchInputs = () => {
 
     const { degrees } = getDegreesFromDirections(x as number, y as number);
 
-    if (movement_degrees !== degrees) {
+    // if degrees is more than 10 different from movement_degrees, update
+    // hack for weird sinking bug
+    // TODO: fix this for real
+    if (
+      movement_degrees == undefined ||
+      Math.abs(degrees - movement_degrees) > 10
+    ) {
       update_movement({ movement_degrees: degrees });
     }
   };

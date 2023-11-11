@@ -8,29 +8,37 @@ const getDegreesFromDirections = (
   rightward: boolean
 ) => {
   // individual directions
+  // forward
   if (forward && !backward && !leftward && !rightward) {
     return 0;
   }
+  // backward
   if (!forward && backward && !leftward && !rightward) {
     return 180;
   }
+  // leftward
   if (!forward && !backward && leftward && !rightward) {
     return 90;
   }
+  // rightward
   if (!forward && !backward && !leftward && rightward) {
     return -90;
   }
 
   // combinations of directions
+  // forward + leftward
   if (forward && !backward && leftward && !rightward) {
     return 45;
   }
+  // forward + rightward
   if (forward && !backward && !leftward && rightward) {
     return -45;
   }
+  // backward + leftward
   if (!forward && backward && leftward && !rightward) {
     return 135;
   }
+  // backward + rightward
   if (!forward && backward && !leftward && rightward) {
     return -135;
   }
