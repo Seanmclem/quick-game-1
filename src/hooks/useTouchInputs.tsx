@@ -26,7 +26,8 @@ export const useTouchInputs = () => {
   const handleTouchMove = (e: IJoystickUpdateEvent) => {
     const { x, y, distance } = e;
 
-    if (distance && distance < 50) {
+    // Depth of deadzone
+    if (distance && distance < 25) {
       return;
     }
 
