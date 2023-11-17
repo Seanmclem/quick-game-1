@@ -40,9 +40,9 @@ export const useTouchInputs = () => {
 
     const { degrees } = getDegreesFromDirections(x as number, y as number);
 
-    // if degrees is more than 10 different from movement_degrees, update
+    // if degrees is more than 10 different from previous movement_degrees, update
     // hack for weird sinking bug
-    // TODO: fix this for real
+    // TODO: fix this for real,, in character controller
     if (
       movement_degrees == undefined ||
       Math.abs(degrees - movement_degrees) > 10

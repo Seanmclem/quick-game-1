@@ -16,6 +16,19 @@ root.render(
     <MovementJoystick />
     <OptionsButton />
 
+    <div
+      id="touch-square"
+      style={{
+        position: "absolute",
+        right: "30px",
+        top: "30px",
+        height: 200,
+        width: 200,
+        backgroundColor: "red",
+        zIndex: 2,
+      }}
+    ></div>
+
     <Canvas
       style={{ userSelect: "none" }}
       shadows

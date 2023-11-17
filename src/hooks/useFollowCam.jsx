@@ -1,6 +1,6 @@
 import { useThree } from "@react-three/fiber";
 import { useRapier } from "@react-three/rapier";
-import { useEffect, useMemo } from "react";
+import { useEffect, useMemo, useRef } from "react";
 import * as THREE from "three";
 
 export default function useFollowCam(props) {
@@ -29,13 +29,16 @@ export default function useFollowCam(props) {
   let rayHit = null;
 
   // Mouse move event
+
+  // ALL here "e.movementX" and "e.movementY" are "PIXELS" not "RADIANS"??
+  // https://developer.mozilla.org/en-US/docs/Web/API/MouseEvent/movementX
   const onDocumentMouseMove = (e) => {
     if (document.pointerLockElement) {
       pivot.rotation.y -= e.movementX * 0.002;
       const vy = followCam.rotation.x + e.movementY * 0.002;
-
+      console.log("e.movementX", e.movementX);
+      console.log("e.movementY", e.movementY);
       cameraDistance = followCam.position.length();
-
       if (vy >= -0.5 && vy <= 1.5) {
         followCam.rotation.x = vy;
         followCam.position.y = -cameraDistance * Math.sin(-vy);
@@ -44,6 +47,49 @@ export default function useFollowCam(props) {
     }
     return false;
   };
+
+  const lastTouchRef = useRef({ x: 0, y: 0 });
+
+  const onDivTouchMove = (e) => {
+    e.preventDefault();
+    const touch = e.touches[0];
+    const movementX = touch.pageX - lastTouchRef.current.x;
+    const movementY = touch.pageY - lastTouchRef.current.y;
+
+    // Logic to handle movement...
+    pivot.rotation.y -= movementX * 0.002;
+    const vy = followCam.rotation.x + movementY * 0.002;
+
+    console.log("e.movementX", movementX);
+    console.log("e.movementY", movementY);
+
+    cameraDistance = followCam.position.length();
+
+    if (vy >= -0.5 && vy <= 1.5) {
+      followCam.rotation.x = vy;
+      followCam.position.y = -cameraDistance * Math.sin(-vy);
+      followCam.position.z = -cameraDistance * Math.cos(-vy);
+    }
+
+    lastTouch.current = { x: touch.pageX, y: touch.pageY };
+  };
+
+  const onDivTouchStart = (e) => {
+    e.preventDefault();
+    const touch = e.touches[0];
+    lastTouchRef.current = { x: touch.pageX, y: touch.pageY };
+  };
+
+  useEffect(() => {
+    const div = document.getElementById("touch-square"); // Replace with your div's ID
+    div.addEventListener("touchmove", onDivTouchMove);
+    div.addEventListener("touchstart", onDivTouchStart);
+
+    return () => {
+      div.removeEventListener("touchmove", onDivTouchMove);
+      div.removeEventListener("touchstart", onDivTouchStart);
+    };
+  }, []); // Empty dependency array ensures this runs once on mount
 
   // Mouse scroll event
   const onDocumentMouseWheel = (e) => {

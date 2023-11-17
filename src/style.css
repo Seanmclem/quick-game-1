@@ -12,6 +12,10 @@ body,
     rgba(253, 228, 255, 1) 0%,
     rgba(124, 156, 254, 1) 100%
   );
+
+  /* prevents long-press select on mobile */
+  -webkit-user-select: none;
+  user-select: none;
 }
 
 .controlKeys {

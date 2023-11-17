@@ -267,8 +267,7 @@ export default function CharacterController(props) {
   /**
    * Load camera pivot and character move preset
    */
-  const { pivot, followCam, cameraCollisionDetect } =
-    useFollowCam(cameraSetups);
+  const { pivot, cameraCollisionDetect } = useFollowCam(cameraSetups);
   const pivotPosition = useMemo(() => new THREE.Vector3());
   const modelEuler = useMemo(() => new THREE.Euler(), []);
   const modelQuat = useMemo(() => new THREE.Quaternion(), []);
@@ -511,17 +510,6 @@ export default function CharacterController(props) {
     if (movement_degrees !== undefined) {
       modelEuler.y = pivot.rotation.y + DEG_TO_RAD(movement_degrees);
     }
-
-    // // For combined directions:
-    // if (forward && leftward) {
-    //   modelEuler.y = pivot.rotation.y + DEG_TO_RAD(45);
-    // } else if (forward && rightward) {
-    //   modelEuler.y = pivot.rotation.y + DEG_TO_RAD(-45);
-    // } else if (backward && leftward) {
-    //   modelEuler.y = pivot.rotation.y + DEG_TO_RAD(135);
-    // } else if (backward && rightward) {
-    //   modelEuler.y = pivot.rotation.y + DEG_TO_RAD(-135);
-    // }
 
     // Move character to the moving direction
     if (is_moving) moveCharacter(delta, run, slopeAngle, movingObjectVelocity);
